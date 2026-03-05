@@ -3,7 +3,7 @@ FROM python:3.9-slim
 WORKDIR /usr/src/app
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y --no-install-recommends curl git unzip
+    apt-get install -y --no-install-recommends curl git patch unzip
 
 RUN pip install --no-cache-dir packaging pyyaml tomlkit
 
@@ -18,5 +18,5 @@ COPY foreign_deps ./foreign_deps
 COPY releases ./releases/
 
 WORKDIR /usr/src/flatpak
-ENV HOME=/usr/src/flatpak/.flatpak-builder
+ENV HOME=/usr/src/flatpak/.flatpak-builder PYTHONUNBUFFERED=1
 ENTRYPOINT [ "/usr/src/app/flatpak-flutter" ]
